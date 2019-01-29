@@ -4,7 +4,7 @@
 
 """
 
-__author__ = 'Wei Lee'
+__author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
 from flask import Flask
 

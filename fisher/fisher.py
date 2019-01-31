@@ -12,6 +12,10 @@ app = create_app()
 
 
 if __name__ == '__main__':
+    print('url_map:')
+    print(app.url_map)
+    print('view_functions:')
+    print(app.view_functions)
     app.run(host='0.0.0.0', port=5983, debug=app.config['DEBUG'])
 
 

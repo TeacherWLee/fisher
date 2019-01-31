@@ -17,11 +17,22 @@ from yushu_book import YuShuBook
 web = Blueprint('web', __name__)
 
 
-@web.route('/book/search/<q>/<page>')
+#@web.route('/book/search/<q>/<page>')
+@web.route('/book/search')
 def search(q, page):
-    isbn_or_key = is_isbn_or_key(q)
-    if isbn_or_key == 'isbn':
-        result = YuShuBook.search_by_isbn(q)
-    else:
-        result = YuShuBook.search_by_keyword(q)
-    return jsonify(result)
+    return 'test_search'
+    # isbn_or_key = is_isbn_or_key(q)
+    # if isbn_or_key == 'isbn':
+    #     result = YuShuBook.search_by_isbn(q)
+    # else:
+    #     result = YuShuBook.search_by_keyword(q)
+    # return jsonify(result)
+
+
+@web.route('/')
+def test_root():
+    return 'test_root'
+
+@web.route('/test')
+def test_test():
+    return 'test_test'

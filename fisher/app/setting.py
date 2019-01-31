@@ -6,3 +6,4 @@
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
+PER_PAGE = 15

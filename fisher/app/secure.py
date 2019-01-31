@@ -6,4 +6,4 @@
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
-DEBUG = True
+DEBUG = False

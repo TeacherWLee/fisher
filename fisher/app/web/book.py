@@ -3,15 +3,21 @@
 """
 
 """
-from flask import jsonify
-
-from helper import is_isbn_or_key
-from yushu_book import YuShuBook
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
 
-@app.route('/book/search/<q>/<page>')
+from flask import jsonify
+from flask import Blueprint
+
+from helper import is_isbn_or_key
+from yushu_book import YuShuBook
+
+
+web = Blueprint('web', __name__)
+
+
+@web.route('/book/search/<q>/<page>')
 def search(q, page):
     isbn_or_key = is_isbn_or_key(q)
     if isbn_or_key == 'isbn':

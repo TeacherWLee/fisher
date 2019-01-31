@@ -3,15 +3,13 @@
 """
 
 """
+from app import create_app
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
 
-from flask import Flask
+app = create_app()
 
-
-app = Flask(__name__)
-app.config.from_object('config')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5983, debug=app.config['DEBUG'])

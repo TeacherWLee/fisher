@@ -5,10 +5,10 @@ __author__ = 'bliss'
 
 from urllib import request
 from urllib.parse import quote
-from httper.client import HTTPSConnection
+from app.libs.httper import HTTPSConnection
 from flask import json, current_app
 import requests
-from app.libs.proxy_ip import get_ip_list, get_random_ip
+
 
 class HTTP:
     # 经典类和新式类

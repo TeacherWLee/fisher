@@ -6,5 +6,8 @@
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
-DEBUG = True
-SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://root:wlee0721@localhost:3306/fisher'
+author_list = ['[清] 曹雪芹 著', '高鹗 续']
+
+r = '、'.join(author_list)
+
+print(r)

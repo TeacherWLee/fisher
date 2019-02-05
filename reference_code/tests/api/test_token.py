@@ -39,7 +39,7 @@ class TestToken(TestUserCSUCase):
         """Token:是否按时过期"""
         headers = self.get_authorized_header(expiration=1)
         time.sleep(3)
-        rv = self.client.get('/v1/test/auth', headers=headers)
+        rv = self.client.get('/v1/unit_learn/auth', headers=headers)
         assert rv.status_code == 401
         assert b'1003' in rv.data
 

@@ -79,12 +79,12 @@ class TestOrg(TestOrgCase):
             {
                 "url": "http://321.com",
                 "type": 1,
-                "description": "this is for test",
+                "description": "this is for unit_learn",
             },
             {
                 "url": "http://321.com",
                 "type": 2,
-                "description": "this is for test",
+                "description": "this is for unit_learn",
             }
         ]
         data_str = json.dumps(data)

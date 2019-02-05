@@ -17,7 +17,7 @@ class TestMall(TestUserCSUCase):
     def test_create_order_duiba(self):
         """商城：积分的扣除是否正常"""
 
-        get_params = ("?uid=1&orderNum=order-for-test-1447670790415&"
+        get_params = ("?uid=1&orderNum=order-for-unit_learn-1447670790415&"
                       "credits=1000&params=15045678901&type=phonebill&"
                       "paramsTest10=10&ip=192.168.1.100&sign=4ae02d3ac2e007f877b8912361445780&"
                       "timestamp=1447670790415&waitAudit=true&actualPrice=1000&"
@@ -52,7 +52,7 @@ class TestMall(TestUserCSUCase):
 
     def test_create_order_create_time(self):
         """商城：两次订单的创建时间是否不一样"""
-        get_params = ("?uid=1&orderNum=order-for-test-1447670790415&"
+        get_params = ("?uid=1&orderNum=order-for-unit_learn-1447670790415&"
                       "credits=1000&params=15045678901&type=phonebill&"
                       "paramsTest10=10&ip=192.168.1.100&sign=4ae02d3ac2e007f877b8912361445780&"
                       "timestamp=1447670790415&waitAudit=true&actualPrice=1000&"
@@ -80,7 +80,7 @@ class TestMall(TestUserCSUCase):
         uid=2 只有300分
         """
 
-        get_params = ("?uid=2&paramsTest32=32&orderNum=order-for-test-1447732196174&"
+        get_params = ("?uid=2&paramsTest32=32&orderNum=order-for-unit_learn-1447732196174&"
                       "credits=1000&params=15045678901&type=phonebill&ip=192.168.1.100&"
                       "sign=3680acf95d90232d406b7eb52b44eb83&timestamp=1447732196174&"
                       "waitAudit=true&actualPrice=1000&"

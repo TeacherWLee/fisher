@@ -1,0 +1,180 @@
+{% extends "layout.html" %}         {#  继承父类  #}
+
+{% block title %}Jinja2 学习{% endblock %}    # 填充父类模板块block内容
+
+{% block content %}
+
+    {{ super() }}   {#  加载父类内容  #}
+
+
+    <h2>注释</h2>
+    <p>
+        符号：{{ '{#  #}' | safe() }}<br>
+        作用：装载一个注释，模板渲染的时候会忽视这中间的值。
+    {# 这是一个jinja2的注释内容 #}
+    </p>
+
+    <h2>变量定义</h2>
+    <p>
+    关键字：set<br>
+    作用：定义变量<br>
+    定义语句：{{ "{% set stu_info = {'name': 'Jarvis', 'age': 18} %}" }}<br>
+    执行语句：{{ "学生{{ stu_info['name'] }}的年龄是{{ stu_info['age'] }}岁。" }}<br>
+    运行结果：
+    {% set stu_info = {'name': 'Jarvis', 'age': 18} %}
+    学生{{ stu_info['name'] }}的年龄是{{ stu_info['age'] }}岁。
+    </p>
+
+
+    <h2>传参</h2>
+    <p>
+        符号：{{ '{{  }} ' | safe() }} <br>
+        作用：使用变量。<br>
+        说明：jinja2支持python中所有的Python数据类型比如列表、字段、对象等。<br>
+        示例：<br>
+        语句：{{ '传入参数demo_parameter的值是：{{ demo_parameter }}。' }}<br>
+        结果：传入参数demo_parameter的值是：{{ demo_parameter }}。
+    </p>
+
+
+    <h2>过滤器</h2>
+    <h3>过滤器语法</h3>
+    <p>
+        符号：{{ 'value | filter ' | safe() }} <br>
+        作用：Variables can be modified by filters.<br>
+        文献：{{ "http://jinja.pocoo.org/docs/2.10/templates/#builtin-filters" }}<br>
+        示例：<br>
+        语句：{{ "{{ 'abc' | captialize  }}" }}<br>
+        结果：{{ 'abc' | capitalize() }}<br>
+        语句：{{ "{{ ''|default('the string was empty', true) }}" }}<br>
+        结果：{{ ''|default('the string was empty', true) }}
+    </p>
+    <h3>常用过滤器</h3>
+    <table>
+        <tr><th align="right">过滤器名称</th><th align="left">说明</th></tr>
+        <tr><th align="right">safe</th><th align="left">渲染时值不转义</th></tr>
+        <tr><th align="right">capitialize</th><th align="left">把值的首字母转换成大写，其他子母转换为小写</th></tr>
+        <tr><th align="right">lower</th><th align="left">把值转换成小写形式</th></tr>
+        <tr><th align="right">upper</th><th align="left">把值转换成大写形式</th></tr>
+        <tr><th align="right">title</th><th align="left">把值中每个单词的首字母都转换成大写</th></tr>
+        <tr><th align="right">trim</th><th align="left">把值的首尾空格去掉</th></tr>
+        <tr><th align="right">striptags</th><th align="left">渲染之前把值中所有的HTML标签都删掉</th></tr>
+        <tr><th align="right">join</th><th align="left">拼接多个值为字符串</th></tr>
+        <tr><th align="right">replace</th><th align="left">替换字符串的值</th></tr>
+        <tr><th align="right">round</th><th align="left">默认对数字进行四舍五入，也可以用参数进行控制</th></tr>
+        <tr><th align="right">int</th><th align="left">把值转换成整型</th></tr>
+    </table>
+
+
+    <h2>分支</h2>
+    <p>
+        符号：if elif else endif <br>
+        作用：程序分支。<br>
+        文献：{{ "http://jinja.pocoo.org/docs/2.10/templates/#if" }}<br>
+        示例：<br>
+        语句：{{ "{% if 0 <= age < 6 %} 学前儿童 {% elif 6 <= age < 24 %} 学龄儿童 {% else %} 非学龄青年 {% endif %}" }}<br>
+        结果：
+        {% if 0 <= age < 6 %}
+            学前儿童
+        {% elif 6 <= age < 24 %}
+            学龄儿童
+        {% else %}
+            非学龄青年
+        {% endif %}
+    </p>
+
+
+    <h2>循环</h2>
+    <p>
+        符号：for in endfor <br>
+        作用：程序循环。<br>
+        文献：{{ "http://jinja.pocoo.org/docs/2.10/templates/#for" }}
+    </p>
+    <h3>迭代列表</h3>
+    <p>
+    语句：{{ "{% for foo in fruit_list %}   {{ loop.index }}-{{ foo }}<br>   {% endfor %}" }}<br>
+    结果：<br>
+    {% for foo in fruit_list %}
+        {{ loop.index }}-{{ foo }}<br>
+    {% endfor %}
+    </p>
+    <h3>迭代字典</h3>
+    语句：{{ "<ul>{% for key, value in price_dict.items() %} <li>{{ key }} is ￥{{ value }} / 500g</li> {% endfor %} </ul>" }}<br>
+    结果：<br>
+    <ul>
+    {% for key, value in price_dict.items() %}
+        <li>{{ key }} is ￥{{ value }} / 500g</li>
+    {% endfor %}
+    </ul>
+    <h3>循环变量</h3>
+    <table>
+        <tr><th align="right">变量</th><th align="left">描述</th></tr>
+        <tr><th align="right">loop.index</th><th align="left">当前迭代的索引（从1开始）</th></tr>
+        <tr><th align="right">loop.index0</th><th align="left">当前迭代的索引（从0开始）</th></tr>
+        <tr><th align="right">loop.first</th><th align="left">是否是第一次迭代，返回bool</th></tr>
+        <tr><th align="right">loop.last</th><th align="left">是否是最后一次迭代，返回bool</th></tr>
+        <tr><th align="right">loop.length</th><th align="left">序列中的项目数量</th></tr>
+        <tr><th align="right">loop.revindex</th><th align="left">到循环结束的次数（从1开始）</th></tr>
+        <tr><th align="right">loop.revindex0</th><th align="left">到循环结束的次数(从0开始）</th></tr>
+    </table>
+
+
+    <h2>宏</h2>
+    <p>
+        符号：macro <br>
+        作用：功能单元，类似函数。<br>
+        文献：{{ "http://jinja.pocoo.org/docs/2.10/templates/#macro" }}<br>
+    </p>
+    <h3>本模板宏</h3>
+    定义语句：{{ '{% macro input(name, age=18) %} <input type="text" name="{{ name }}" value="{{ age }}"> {% endmacro %}'}}<br>
+    调用语句：{{ '{{ input("daxin") }} {{ input("daxin", age=20) }}' }}<br>
+    结果：<br>
+    {% macro input(name, age=18) %}
+        <input type="text" name="{{ name }}" value="{{ age }}">
+    {% endmacro %}
+    <p>{{ input('daxin') }}</p>
+    <p>{{ input('daxin', age=20) }}</p>
+    <h3>调用其他模板宏</h3>
+    语句：{{ '{% from "_macro.html" import show_price %}{% for key, value in price_dict.items() %}{{ show_price(key, value) }}{% endfor %}'}}<br>
+    结果：<br>
+    {% from "_macro.html" import show_price %}
+    {% for key, value in price_dict.items() %}
+        {{ show_price(key, value) }}
+    {% endfor %}
+
+
+    <h2>url_for</h2>
+    <p>
+    关键字：url_for<br>
+    说明：根据endpoint生成url<br>
+    语句：{{ '<img src="{{ url_for("static", filename="bicycle.jpg") }}" height="100">' }}<br>
+    结果：<br>
+    <img src="{{ url_for('static', filename='bicycle.jpg') }}" height="100">
+    </p>
+
+
+    <h2>消息闪现</h2>
+    <p>
+    关键字：get_flashed_messages<br>
+    说明：接收路由函数发送的闪现消息，需要配置SECRET_KEY配置项。<br>
+    语句：{{ '{% set messages = get_flashed_messages() %}' }}<br>
+    结果：<br>
+    {% set messages = get_flashed_messages() %}
+    {{ messages }}
+    <br>
+    {% set error_messages = get_flashed_messages(category_filter=["error", "warning"]) %}
+    {{ error_messages }}
+
+
+    <h2>with</h2>
+    <p>
+    关键字：with, endwith<br>
+    说明：限制变量作用域。<br>
+    </p>
+    {% with %}
+        {% set a=18 %}
+        {{ a }}
+    {% endwith %}
+
+{% endblock %}
+

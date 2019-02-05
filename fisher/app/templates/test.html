@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {{data.name}}的年龄是{{data.age}}.
+
+    {% if data.age == 18 %}
+        <p>Jinja2 IF 语句 IF内容</p>
+    {% else %}
+        <p>Jinja2 IF 语句 ELSE内容</p>
+    {% endif %}
+
+    {% set messages = get_flashed_messages() %}
+    {{ messages }}
+    {#
+    {% if data.age == 18 %}
+        <p>Jinja2 IF 语句 IF内容</p>
+    {% elif data.age = 16 %}
+        <p>Jinja2 IF 语句 ELIF内容</p>
+    {% else %}
+        <p>Jinja2 IF 语句 ELSE内容</p>
+    {% endif %}
+#}
+</body>
+</html>

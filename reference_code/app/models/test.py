@@ -5,7 +5,7 @@ from app.models.base import db
 
 
 class Test(db.Model):
-    __tablename__ = 'test'
+    __tablename__ = 'unit_learn'
 
     id = Column(Integer, primary_key=True)
     test = Column(Integer,default=1)

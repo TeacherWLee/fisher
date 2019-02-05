@@ -8,7 +8,7 @@ from flask import session, request
 
 @web.route('/session')
 def test_session():
-    session['test'] = 123
+    session['unit_learn'] = 123
     return ''
 
 @web.route('/record')
@@ -16,13 +16,13 @@ def test_reord():
     s = request.remote_addr
     return s
 
-@web.route('/test')
+@web.route('/unit_learn')
 def test_ip():
     from app.models.test import Test
     t1 = Test1()
     t2 = Test1()
-    # t1.test = 1
-    # t2.test = 2
+    # t1.unit_learn = 1
+    # t2.unit_learn = 2
     t1.test1 = 3
     print(t1.test)
     print(t2.test)

@@ -9,6 +9,8 @@ __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
 from flask import jsonify
 from flask import request
+from flask import render_template
+from flask import flash
 import json
 
 from app.libs.helper import is_isbn_or_key
@@ -36,17 +38,32 @@ def search():
             yushu_book.search_by_keyword(q, page)
 
         books.fill(yushu_book, q)
-        return json.dump(books.__dict__, default=lambda o: o.__dict__)
     else:
-        return jsonify(form.errors)
+        flash('搜索的关键字不符合要求，请重新输入关键字')
 
+    return render_template('search_result.html', books=books, form=form)
+
+
+@web.route('/book/<isbn>/detail')
+def book_detail(isbn):
+    pass
+
+
+@web.route('/unit_learn')
+def test():
+    r = {
+        'name': 'LW',
+        'age': 16
+    }
+    flash('hello flash message.')
+    return render_template('test.html', data=r)
 
 # @web.route('/')
 # def test_root():
 #     return 'test_root'
 #
 #
-# @web.route('/test')
+# @web.route('/unit_learn')
 # def test_test():
 #     return 'test_test'
 

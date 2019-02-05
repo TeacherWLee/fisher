@@ -47,7 +47,7 @@ def book_detail(isbn):
     pass
 
 
-@web.route('/test')
+@web.route('/unit_learn')
 def test():
     r = {
         'name': None,

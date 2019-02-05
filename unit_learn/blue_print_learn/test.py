@@ -14,9 +14,9 @@ app = Flask(__name__)
 app.register_blueprint(bp)
 
 
-@bp.route('/test')
+@bp.route('/unit_learn')
 def test():
-    return 'test'
+    return 'unit_learn'
 
 
 @app.route('/test2')

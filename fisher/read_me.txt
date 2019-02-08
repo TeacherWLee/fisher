@@ -12,3 +12,10 @@ http://localhost:5983/book/search?q=9787501524044&page=1
 
 http://localhost:5983/book/search?q=9787070511209
 http://localhost:5983/book/search?q=红楼梦
+
+
+用户注册：
+http://localhost:5983/register
+
+用户登录：
+http://localhost:5983/login

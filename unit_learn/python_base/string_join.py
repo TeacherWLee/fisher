@@ -6,5 +6,11 @@
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
-PER_PAGE = 15
-BEANS_UPLOAD_ONE_BOOK = 0.5
+author_list = ['[清] 曹雪芹 著', '高鹗 续']
+
+r = '、'.join(author_list)
+
+print(r)
+
+
+

@@ -3,24 +3,31 @@
 """
 
 """
+from math import floor
+
+from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from app import login_manager
 from app.libs.helper import is_isbn_or_key
 from app.models.gift import Gift
 from app.models.wish import Wish
 from app.spider.yushu_book import YuShuBook
+from libs.enums import PendingStatus
+from models.drift import Drift
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
 
-from app.models.base import Base
+from app.models.base import Base, db
 from sqlalchemy import Column, Integer, String, Boolean, Float
 
 
 class User(UserMixin, Base):
     # __tablename__ = 'user1'
+    __table_args__ = {"useexisting": True}
     id = Column(Integer, primary_key=True)
     nickname = Column(String(24), nullable=False)
     phone_number = Column(String(18), unique=True)
@@ -48,7 +55,7 @@ class User(UserMixin, Base):
         if is_isbn_or_key(isbn) != 'isbn':
             return False
         yushu_book = YuShuBook()
-        yushu_book.search_by_isbn()
+        yushu_book.search_by_isbn(isbn)
         if not yushu_book.first:
             return False
 
@@ -61,6 +68,40 @@ class User(UserMixin, Base):
             return True
         else:
             return False
+
+    def generate_token(self, expiration=600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def reset_password(token, new_password):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        uid = data.get('id')
+        with db.auto_commit():
+            user = User.query.get(uid)
+            user.password = new_password
+        return True
+
+    def can_send_drift(self):
+        if self.beans < 1:
+            return False
+        success_gift_count = Gift.query.filter_by(uid=self.id, launched=False).count()
+        success_receive_count = Drift.query.filter_by(requester_id=self.id, pending=PendingStatus.success).count()
+
+        return True if floor(success_receive_count / 2) <= floor(success_gift_count) else False
+
+    @property
+    def summary(self):
+        return dict(
+            nickname=self.nickname,
+            beans=self.beans,
+            email=self.email,
+            send_receive=str(self.send_counter) + '/' + str(self.receive_counter)
+        )
 
 
 @login_manager.user_loader

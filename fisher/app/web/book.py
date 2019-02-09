@@ -3,6 +3,11 @@
 """
 
 """
+from flask_login import current_user
+
+from models.gift import Gift
+from models.wish import Wish
+from view_models.trade import TradeInfo
 
 __author__ = 'Wei Li (liw@sicnu.edu.cn)'
 
@@ -46,10 +51,33 @@ def search():
 
 @web.route('/book/<isbn>/detail')
 def book_detail(isbn):
+    has_in_gifts = False
+    has_in_wishes = False
+    # 取书籍详情数据
     yushu_book = YuShuBook()
     yushu_book.search_by_isbn(isbn)
     book = BookViewModel(yushu_book.first)
-    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
+
+    # if current_user.is_authoenticated:
+    if Gift.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+        has_in_gifts = True
+    if Wish.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+        has_in_wishes = True
+
+    trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
+    trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
+
+    trade_gifts_model = TradeInfo(trade_gifts)
+    trade_wishes_model = TradeInfo(trade_wishes)
+
+    return render_template(
+        'book_detail.html',
+        book=book,
+        wishes=trade_wishes_model,
+        gifts=trade_gifts_model,
+        has_in_gifts=has_in_gifts,
+        has_in_wishes=has_in_wishes
+    )
 
 
 @web.route('/unit_learn')
@@ -60,14 +88,3 @@ def test():
     }
     flash('hello flash message.')
     return render_template('test.html', data=r)
-
-# @web.route('/')
-# def test_root():
-#     return 'test_root'
-#
-#
-# @web.route('/unit_learn')
-# def test_test():
-#     return 'test_test'
-
-
